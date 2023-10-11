@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Information Form</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <h1>Student Information Form</h1>
+
+    <form action="">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required placeholder="Enter Name">
+
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" required placeholder="Enter Age">
+
+        <label for="roll_no">Roll Number:</label>
+        <input type="text" id="rollno" name="rollno" required placeholder="Enter Roll No. (leave if NA)">
+
+        <input type="submit" value="Submit" onclick="createObject()">
+    </form>
+    <div class="output-container" id="output-container"></div>
+
+    <script>
+      // Define the Person class
+      class Person {
+        constructor(name, age) {
+          this.name = name;
+          this.age = age;
+        }
+
+        // Regular member function
+        introduce() {
+          return `Hi, I'm ${this.name} and I'm ${this.age} years old.`;
+        }
+
+        // Arrow function as a member function
+        displayDetails = () => {
+          const outputElement = document.getElementById("output-container");
+          outputElement.innerHTML = `<p>${this.introduce()}</p>`;
+        };
+      }
+
+      // Define the Student class by inheriting from Person
+      class Student extends Person {
+        constructor(name, age, rollNo) {
+          super(name, age);
+          this.rollNo = rollNo;
+        }
+
+        // Override the introduce method
+        introduce() {
+          return `Hi, I'm ${this.name}, age ${this.age} a student with roll number ${this.rollNo}.`;
+        }
+      }
+
+      function createObject() {
+        event.preventDefault();
+        debugger;
+        var age = document.getElementById("age").value;
+        var name = document.getElementById("name").value;
+        var rollno = document.getElementById("rollno").value;
+        const outputElement = document.getElementById("output-container");
+
+        if (name == "") {
+          outputElement.innerHTML = `<p>Please enter Name</p>`;
+          return;
+        }
+
+        if (age == 0) {
+          outputElement.innerHTML = `<p>Please enter age</p>`;
+          return;
+        }
+
+        if (age > 0 && age < 20 && rollno == 0) {
+          outputElement.innerHTML = `<p>Please enter Roll no</p>`;
+          return;
+        }
+
+        if (age > 0 && age < 20) {
+          // Create a Student object
+          try {
+            const student1 = new Student(name, age, rollno);
+            outputElement.innerHTML = `<p>${student1.introduce()}</p>`;
+          } catch (error) {
+            outputElement.innerHTML = `<p>Error: ${error.message}</p>`;
+          }
+        } else {
+          // Create a Person object and print details
+          const person1 = new Person(name, age);
+
+          outputElement.innerHTML = `<p>${person1.introduce()}</p>`;
+        }
+      }
+
+      //   // Create a Person object and print details
+      //   const person1 = new Person("John", 25);
+      //   const outputElement = document.getElementById("output");
+      //   outputElement.innerHTML += `<p>${person1.introduce()}</p>`;
+
+      //   // Create a Student object
+      //   try {
+      //     const student1 = new Student("Alice", 20, 12345);
+      //     outputElement.innerHTML += `<p>${student1.introduce()}</p>`;
+
+      //     // Try to create a Student with an invalid roll number (zero)
+      //     const student2 = new Student("Bob", 22, 0); // This will throw an exception
+      //   } catch (error) {
+      //     outputElement.innerHTML += `<p>Error: ${error.message}</p>`;
+      //   }
+    </script>
+  </body>
+</html>
+
